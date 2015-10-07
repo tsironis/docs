@@ -1,5 +1,3 @@
-# Xamarin SDK integration <button>Download SDK</button>
-
 ## Oculos evehor
 
 Lorem markdownum adspicit: frondes vale corpus rogat tempore, innocuum, signa.

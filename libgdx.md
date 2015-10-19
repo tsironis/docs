@@ -1,84 +1,232 @@
-## Oculos evehor
+# **Introduction**
 
-Lorem markdownum adspicit: frondes vale corpus rogat tempore, innocuum, signa.
-Se morsu, cum tum nondum deponere precaris curru medicamen medio: *cessit*? Pomi
-reddant adspergit, aut inter sideribus virides pedum; Achilli Saturnia capiunt
-sive genus esse abstulit: **est numero**. Cessit super. Arma humum; illa
-miscuit.
+This is a simple tutorial that will help you integrate Pollfish surveys in your libgdx Android app.
 
-    file /= data;
-    if (index_ethernet + esports_lag_ip) {
-        sdsl_ppl += ajax_cdfs;
-        cycleCadJfs.alert = 5;
-        keySeoDrop -= biometrics * cablePortExcel;
+Integration of Pollfish in an Android application is simple, and is described in detail in the official guide here: [Pollfish Android Documentation](https://www.pollfish.com/android)
+
+## STEPS SUMMARY
+
+1. [Sign Up](http://www.pollfish.com/login/dev) as a Developer at Pollfish website, create a new app and grab its API key from the dashboard
+2. [Download](https://www.pollfish.com/android) Pollfish SDK (either Google Play or Universal)
+3. Add relevant Pollfish jar in your project, import relevant classes and add required permissions in your app's manifest as described in the [documentation](https://www.pollfish.com/android)
+4. Call Pollfish init function in your onResume of your AndroidLauncher
+
+```java
+
+package com.mygdx.game.android;
+
+import android.os.Bundle;
+import com.badlogic.gdx.backends.android.AndroidApplication;
+import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.mygdx.game.MyGdxGame;
+
+import com.pollfish.main.PollFish;
+import com.pollfish.constants.Position;
+
+public class AndroidLauncher extends AndroidApplication{
+
+ @Override
+ protected void onCreate (Bundle savedInstanceState) {
+   super.onCreate(savedInstanceState);
+   
+   AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
+   initialize(MyGdxGame(), config);
+ }
+
+ @Override
+ public void onResume() {  
+    super.onResume();
+    
+    PollFish.init(this, "your_api_key_here", Position.BOTTOM_LEFT, 5);  
+ }
+
+}
+```
+
+With this simple implementation you should be able to see Pollfish surveys within your app within a few minutes.
+
+## Optional Steps
+
+
+**1. Listen to Pollfish listeners (optional)**
+
+You can listen to Pollfish listeners by implementing them in your AndroidLauncher, for example:
+
+```java
+import com.pollfish.interfaces.PollfishSurveyCompletedListener;
+```
+```java
+public class AndroidLauncher extends AndroidApplication implements PollfishSurveyCompletedListener{
+```
+
+```java
+@Override
+public void onPollfishSurveyCompleted(boolean playfulSurveys , int surveyPrice) {
+ 
+  Log.d("Pollfish", "Pollfish survey completed - Playful survey: " + playfulSurveys + " with price: " + surveyPrice);
+ 
+}
+```
+
+**2. Manually show or hide Pollfish (optional)**
+
+You can manually show or hide Pollfish in your Android App with a simple implementation as the following one:
+
+In your and in your `AndroidLauncher.java` file: 
+
+```java
+
+package com.mygdx.game.android;
+
+import android.os.Bundle;
+import com.badlogic.gdx.backends.android.AndroidApplication;
+import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.mygdx.game.MyGdxGame;
+
+import com.pollfish.main.PollFish;
+import com.pollfish.constants.Position;
+
+public class AndroidLauncher extends AndroidApplication implements MyGdxGame.MyPollfishCallbacks {
+ 
+ protected MyGdxGame myGdxGame;
+ 
+ @Override
+ protected void onCreate (Bundle savedInstanceState) {
+   super.onCreate(savedInstanceState);
+   
+   AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
+   
+   myGdxGame=new MyGdxGame();
+   myGdxGame.setMyPollfishCallbacks(this);
+
+   initialize(myGdxGame, config);
+ }
+
+ @Override
+ public void onResume() {  
+    super.onResume();
+    
+    PollFish.customInit(this, "your_api_key_here", Position.BOTTOM_LEFT, 5);
+    PollFish.hide();  
+ }
+
+ @Override
+ public void onShowPollfish() {
+     PollFish.show();
+ }
+
+ @Override
+ public void hidePollfish() {
+     PollFish.hide();
+ }
+
+}
+```
+
+and in your `MyGdxGame.java` file: 
+
+```java
+package com.mygdx.game;
+
+import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
+public class MyGdxGame extends ApplicationAdapter {
+    
+    private SpriteBatch batch;
+    private Skin skin;
+    private Stage stage;
+
+    // Define an interface for your various callbacks to the android launcher
+    public interface MyPollfishCallbacks {
+        public void showPollfish();
+        public void hidePollfish();
     }
-    if (webcam + pplInfringementMainframe) {
-        gnu -= 2;
-        sms(digitize, bandwidth);
-        server_middleware_card = cardRestoreHeat + control;
+
+    // Local variable to hold the callback implementation
+    private MyPollfishCallbacks myPollfishCallbacks;
+
+    // ** Additional **
+    // Setter for the callback
+    public void setMyPollfishCallbacks(MyPollfishCallbacks callback) {
+        myPollfishCallbacks = callback;
     }
-    var compression_ipv_home = infringementEmoticonUgc;
 
-## Ora caelestes suum
+    @Override
+    public void create() {
 
-Res caerulei regia ad vastum eripuit limina sociati *corrumpere*, infamis essem,
-mersae, de curas pressus. Moverat fatetur tyrannus fronde monstra semper, vos
-esset per *et* Achilles. Quae Saturnia Huic fratris et matrem Eridanus in
-cornua, percussis cretum.
+        batch = new SpriteBatch();
+        skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+        stage = new Stage();
 
-    if (searchNosql + 3 > odbc(desktopGbps / udp_access, fiber,
-            hubVaporwareSignature - keywords_adware)) {
-        compression_fddi += vpn;
-        leopard -= delete.metaAnimatedDrive.led_font_payload(in_master_wired, 2,
-                networking_text_interface);
-        upload += hypermedia(backsideTft);
+        final TextButton showBtn = new TextButton("Show", skin, "default");
+
+        showBtn.setWidth(400f);
+        showBtn.setHeight(100f);
+        showBtn.setPosition(Gdx.graphics.getWidth() /2 - 600f, Gdx.graphics.getHeight()/2 - 10f);
+
+        showBtn.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                   if(myPollfishCallbacks!=null){
+                         myPollfishCallbacks.showPollfish();
+                   }
+            }
+        });
+
+        final TextButton hideBtn = new TextButton("Hide", skin, "default");
+
+        hideBtn.setWidth(400f);
+        hideBtn.setHeight(100f);
+        hideBtn.setPosition(Gdx.graphics.getWidth() /2 + 300f, Gdx.graphics.getHeight()/2 - 10f);
+
+        hideBtn.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                   if(myPollfishCallbacks!=null){
+                         myPollfishCallbacks.hidePollfish();
+                   }
+            }
+        });
+
+        stage.addActor(showBtn);
+        stage.addActor(hideBtn);
+
+        Gdx.input.setInputProcessor(stage);
     }
-    json_double_quicktime /= web_command(3 * ansi_wordart);
-    skin_icon_computer = adapterSurgeRoom(volume_bar_flash(
-            refreshCybersquatterBox * 2, sectorAdsl(vectorDigitalRemote), 3));
 
-## Dixit dea signant pressique virgo
-
-Nam bis quam illo infelix, egesto, Tusca his postquam, septem. Per Iovis Libycas
-turba: est faciente ventoque patriam, a magis, siccaverat
-[edentem](http://kimjongunlookingatthings.tumblr.com/), fuit ego ignarus turba.
-
-Tyndaris [figere](http://stoneship.org/) exemplis
-[quicquid](http://www.mozilla.org/) vires. Deus feror formosa Tartara amorem
-conclamat errat potentem dixerat tenet vix coniuge taurorum Aeneas: solus sic.
-Labores ignara huic Venus, sic Stabiasque Iovem mutabit pars; nequiquam figura
-vivax, vacuus. Nunc vincere. Lurida regna dubium boves clauserat proelia.
-
-    if (mainframe_computing == cdma) {
-        method -= netbios_ip_in;
-        web_www_compact += footer;
-    } else {
-        num_piconet_keyboard.printSmtp = memory.compiler.antivirus(
-                open_alpha_orientation(port_flowchart_webmail,
-                systemCharacterEthics, -5), mountain_fat_tag, 4);
-        standbyRtMidi -= analog;
+    @Override
+    public void dispose() {
+        batch.dispose();
     }
-    if (2) {
-        coreHubDigital(usb, cycle_nat / application, docking + rate_hertz);
-        redundancy = 1;
-        file_browser -= imClickCarrier;
+
+    @Override
+    public void render() {
+        Gdx.gl.glClearColor(1, 0, 1, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        batch.begin();
+        stage.draw();
+        batch.end();
     }
-    if (upRefresh) {
-        opacity_mainframe_file.toslinkOpticOptic *= program(cd(mp));
-        mp_sector = gpsP;
-        fpu_interlaced.copy_teraflops.spoofing(googleSample, -2);
-    } else {
-        dvdServicesSoftware = room;
-        platform_spool_menu += -5;
-        dial /= ctp.apple_vector.readmePostscript(activeCad, truncateIrcAccess);
+
+    @Override
+    public void resize(int width, int height) {
     }
-    hdd.srgbLeafCore(mamp_finder_file, -3);
 
-Naias frementis mea equo genitus operatus ad nescit dicuntur loqui sic haerentes
-Euboica Prospicientis, nec. Fatiferum regia lavere creavit, ante hac radix
-magna, sic. Hasta date una docta, gregis tibi **expulit**, me patria urbes,
-Myconon, dum Iove nec pars violentus!
+    @Override
+    public void pause() {
+    }
 
-
-
-
+    @Override
+    public void resume() {
+    }
+}
+```

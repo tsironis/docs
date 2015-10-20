@@ -1,3 +1,29 @@
+<div class="changelog">
+v4.1.0
+
+- added new init function with developer mode param
+- added track and respect of Google Advertising Id
+v4.0.3
+
+- added UserProperties object for passing attributes around user.
+- added init function with option to pass user view layout as param
+- added init function with option to pass a custom param and receive it on server-to-server callback
+- Added various bug fixes and optimizations
+v4.0.2
+
+- When called manually, show/hide Pollfish on main UI thread
+- fixed bugs on layout resize on orientation changes when android:configChanges="screenSize"
+- Added various bug fixes and optimizations
+v4.0.1
+
+- Added various bug fixes and optimizations
+
+v4.0.0
+
+- Fixed issue with support for Gingerbread 2.3
+- Support for Lollipop
+</div>
+
 ## Quick Guide of Google Play SDK
 
 1.  Download Pollfish jar or aar file and add to your project

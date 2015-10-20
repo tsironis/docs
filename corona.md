@@ -31,12 +31,12 @@ Login at [www.pollfish.com](http://www.pollfish.com) and add a new app at Pollfi
 
 ### 3. Installing the plugin
 
-Download this repository and paste the contents over your Corona Enterprise project. If you want to read how to use plugins please read Corona guide [here](https://docs.coronalabs.com/daily/native/plugin/index.html).  Then:
+Download [this repository](https://github.com/pollfish/corona-plugin-pollfish) band paste the contents over your Corona Enterprise project. If you want to read how to use plugins please read Corona guide [here](https://docs.coronalabs.com/daily/native/plugin/index.html).  Then:
 
 #### 3.1 Download Pollfish latest SDKs from here:
 
-*	Android: [https://www.pollfish.com/android](https://www.pollfish.com/android)
-*	iOS: [https://www.pollfish.com/ios](https://www.pollfish.com/ios)
+*	Android: [https://www.pollfish.com/docs/android](https://www.pollfish.com/docs/android)
+*	iOS: [https://www.pollfish.com/docs/ios](https://www.pollfish.com/docs/ios)
 
 #### 3.2 Copy the relevant files from this repository in your project's structure:
 

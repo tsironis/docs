@@ -1,4 +1,13 @@
-<div id="docStyling">  
+<div class="changelog changelog-4.1.0">
+v4.1.0
+
+- Support of manual set of devMode for android by ignoring key of signing
+- Respect and submit of Google Advertising Id
+v4.0.0
+
+- Initial Release
+- Support for Lollipop
+</div>
 
 **Obtain a Developer Account and download Pollfish Unity Plugin**
 

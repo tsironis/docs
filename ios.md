@@ -1,3 +1,30 @@
+<div class="changelog changelog-4.1.0">
+v4.1.0
+
+- Fixed bug on orientation changes
+- Converted lib to ARC
+
+v4.0.3
+
+- Fixed bug in init function with Request UUID in release mode
+
+v4.0.2
+
+- Weak link of AdSupport framework
+- Added init function with option to pass a custom param and receive it on server-to-server callback
+- Added UserAttributesDictionary class for passing attributes around user
+- Added various bug fixes and optimizations
+
+v4.0.1
+
+- Added support of circle questions
+- Added various bug fixes and optimizations
+
+v4.0.0
+
+- Added various bug fixes and optimizations
+</div>
+
 ## Quick Guide
 
 1.  Download Pollfish iOS SDK and unzip it
